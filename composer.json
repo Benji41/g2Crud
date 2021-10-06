@@ -1,0 +1,17 @@
+{
+  "name": "project/project",
+  "description": "\"Proyecto de  CRUD lanzado en Heroku\"",
+  "type": "mine",
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Noe Reynoso",
+      "email": "noereynoso.business@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {},
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
+  }
+}

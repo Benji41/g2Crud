@@ -1,22 +1,29 @@
-<?php 
+<?php
 include("./inc/settings.php");
 validar();
 ?>
-<?php 
-    $query = "UPDATE table1 SET column2 = '".$_POST['nombre']."', column3 = '".$_POST['fecha']."', column4 = ".$_POST['numero'].", column5 = ".$_POST['numdouble']." WHERE column1 = ".$_POST['identificador'].";";
-//echo $query;
+<?php
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+$pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
 
-if ( $conn->query($query)== TRUE){
+if (isset($_POST['identificador']) || isset($_POST['nombre']) || isset($_POST['fecha']) || isset($_POST['numero']) || isset($_POST['numDouble'])) {
+    $identificador = $_POST['identificador'];
+    $nombre = $_POST['nombre'];
+    $fecha = $_POST['fecha'];
+    $numero = $_POST['numero'];
+    $numdouble = $_POST['numdouble'];
+    $query = "UPDATE table1 SET column2 =  :nombre  , column3 =  :fecha , column4 =  :numero , column5 =  :numdouble  WHERE column1 =  :identificador ;";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":identificador", $identificador);
+    $stmt->bindParam(":nombre", $nombre);
+    $stmt->bindParam(":fecha", $fecha);
+    $stmt->bindParam(":numero", $numero);
+    $stmt->bindParam(":numdouble", $numdouble);
+    $stmt->execute();
     header("location:crud.php");
-}else{
-    echo "Algo salio mal <a href='https://localhost/crud/crud.php'> clic aqui para volver al crud</a>" ;
-
+}else {
+    echo "Algo salio mal <a href='https://localhost/crud/crud.php'> clic aqui para volver al crud</a>";
 }
+
 ?>

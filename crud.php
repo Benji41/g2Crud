@@ -11,8 +11,8 @@ validar();
     <title>Document</title>
     <script src="./js/funciones.js"></script> 
 
-    <! --link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-    <link rel="stylesheet" href="./css/estilos.css"> 
+<link rel="stylesheet" href="./css/estilos.css">
+
 </head>
 <body>
     Bienvenido a mi crud
@@ -22,28 +22,39 @@ validar();
     <a href="logout.php" >Log out</a>
 <?php
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+$pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
+
 
 $sql = "SELECT column1, column2, column3, column4, column5 FROM table1";
-$result = $conn->query($sql);
-//print_r($result);
-if ($result->num_rows > 0) {
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+define("TD", "</td>\n\t<td>");
+
+if ($stmt->rowCount() > 0) {
   echo "<table border='1'><tr><th>ID</th><th>Name</th><th>Fecha</th><th>Numero</th><th>NumeroDouble</th><th>Eliminar</th><th>Modificar</th></tr>";
   // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "\n<tr>\n\t<td>".$row["column1"]."</td>\n\t<td>".$row["column2"]."</td>\n\t<td>".$row["column3"]."</td>\n\t<td>".$row["column4"]."</td>\n\t<td>".$row["column5"]."</td>";
-    echo "<td><a href='eliminar.php?colum1=".$row["column1"]."' onclick='return confirmar()'><img src='./img/eliminar.png'></a></td><td>
-          <a href='update.php?colum1=".$row["column1"]."' onclick='return confirmarModificar()'><img src='./img/update.png'></td></tr>\n";
+  while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "\n<tr>\n\t<td>".$row["column1"].TD.$row["column2"].TD.$row["column3"].TD.$row["column4"].TD.$row["column5"]."</td>";
+    echo "<td>";
+    echo "<form action='eliminar.php' method='post'>";
+    echo "<input type='hidden' name='colum1' value='".$row["column1"]."'>";
+    echo "<input type='submit' value='' style=\"background:url('./img/eliminar.png'); border: 0; display: block; width: 24px; height: 24px;\" onclick='return confirmar()'></form></td>\n";
+    echo "<td>";
+    
+    echo "<form action='update.php' method='post'>";
+    echo "<input type='hidden' name='colum1' value='".$row["column1"]."'>";
+    echo "<input type='submit' value='' style=\"background:url('./img/update.png'); border: 0; display: block; width: 24px; height: 24px;\" onclick='return confirmar()'></form></td>\n";
+    echo "<td>";
+          //=======================================================
+          //�ltima modificaci�n realizada el 2021-09-15
+          //Por El�as L�pez Garc�a
+          //Por hacer: modificar archivo update.php
+          //=======================================================
   }
   echo "</table>";
 } else {
   echo "0 results";
 }
-$conn->close();
 ?>
 <br>
 <form action="insertar.php" method="post">
@@ -59,6 +70,8 @@ $conn->close();
   <input type="submit" value="Aceptar"><br> 
 </fieldset>
 </form>
+
+</body>
 
 </body>
 </html>

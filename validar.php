@@ -1,37 +1,34 @@
 <?php
 include("./inc/settings.php");
-//print_r($_POST);
-$query="SELECT * FROM usuario WHERE EmployeeID = '$_POST[username]' AND EmployeePassword= md5('$_POST[pwd]')";
-// echo $query;
 
+$pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
 
+if (isset($_POST['username']) && isset($_POST['pwd'])) {
+  $username = $_POST['username'];
+  $password = $_POST['pwd'];
+  $query = "SELECT * FROM usuarios WHERE numero_de_empleado = :username AND pass= md5(:password)";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  $stmt = $pdo->prepare($query);
+  $stmt->bindParam(":username", $username);
+  $stmt->bindParam(":password", $password);
+  $stmt->execute();
 }
 
-$result = $conn->query($query);
-//print_r($result);
-if ($result->num_rows > 0) {
-  
+if ($stmt->rowCount() == 1 ) {
+
   // output data of each row
-  $row = $result->fetch_assoc();
- // echo "Acceso de usuario validado, redirigiendo a la pagina principal.";
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
   session_start();
-  $_SESSION["nombre"] = $row["EmployeeFirstName"];
-  $_SESSION["apellido1"] = $row["EmployeeLastName1"];
-  $_SESSION["apellido2"] = $row["EmployeeLastName2"];
+  $_SESSION["nombre"] = $row["nombre"];
+  $_SESSION["apellido1"] = $row["apellido1"];
+  $_SESSION["apellido2"] = $row["apellido2"];
 
   header("location: crud.php");
-
 } else {
   echo "Se detecto un acceso ilegal al sistema, su ip esta siendo monitoreada y sera enviada a la policia";
-  ?>
-  <a href="https://noereynosoaguirre.000webhostapp.com/">Sitio de login</a>
-  <?php
+?>
+  <a href="http://localhost/crud/">Sitio de login</a>
+<?php
 }
 $conn->close();
 

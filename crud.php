@@ -58,7 +58,7 @@ if ($stmt->rowCount() > 0) {
 ?>
 <br>
 <form action="insertar.php" method="post">
-
+ 
 <fieldset style="width:300px">
 <legend>Inserte la informacion del nuevo registro</legend>
   Id: <input type="number" name="identificador" id="" value="1975" class="w3-input" required><br>
@@ -66,6 +66,7 @@ if ($stmt->rowCount() > 0) {
   Fecha: <input type="date" name="fecha" id="" value="1975-06-23"><br>
   Numero: <input type="number" name="numero" id="" value=""><br> 
   Num.Double: <input type="number" name="numdouble" id="" value=""><br>
+  <input type="hidden" name="action" value="1">
   <br>
   <input type="submit" value="Aceptar"><br> 
 </fieldset>

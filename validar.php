@@ -2,7 +2,7 @@
 include("./inc/settings.php");
 
 $pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
-
+ 
 if (isset($_POST['username']) && isset($_POST['pwd'])) {
   $username = $_POST['username'];
   $password = $_POST['pwd'];

@@ -16,15 +16,6 @@ if (isset($_POST['colum1'])) {
   echo "Algo salio mal <a href='https://localhost/crud/crud.php'> clic aqui para volver al crud</a>";
 }
 
-$i = 0;
-
-while($i< 20); {
-
-//some code here
-
-$i++;
-
-}
 
 
 if ($stmt->rowCount() > 0) {

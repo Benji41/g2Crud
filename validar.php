@@ -2,10 +2,6 @@
 include("./inc/settings.php");
 
 $pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
-$arr = array(1, 2, 3, 4);
-foreach ($arr as &$value) {
-    $value = $value * 2;
-}
 if (isset($_POST['username']) && isset($_POST['pwd'])) {
   $username = $_POST['username'];
   $password = $_POST['pwd'];

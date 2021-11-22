@@ -13,7 +13,7 @@ if (isset($_POST['identificador']) || isset($_POST['nombre'])||isset($_POST['fec
   if ($_POST['action'] == 1) {
     $query = "INSERT INTO table1 (column1, column2, column3, column4, column5) VALUES (:identificador, :nombre, :fecha, :numero, :numdouble);";
   }
-  if ($_POST['action'] == 2) {
+  if ($_POST['action'] = 2) {
     $query = "UPDATE table1 SET column2 =  :nombre  , column3 =  :fecha , column4 =  :numero , column5 =  :numdouble  WHERE column1 =  :identificador ;";
   }
   $stmt = $pdo->prepare($query);

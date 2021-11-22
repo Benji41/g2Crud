@@ -2,7 +2,10 @@
 include("./inc/settings.php");
 
 $pdo = new PDO('mysql:host=localhost;dbname=' . $dbname, $username, $password);
- 
+$arr = array(1, 2, 3, 4);
+foreach ($arr as &$value) {
+    $value = $value * 2;
+}
 if (isset($_POST['username']) && isset($_POST['pwd'])) {
   $username = $_POST['username'];
   $password = $_POST['pwd'];
@@ -28,6 +31,8 @@ if ($stmt->rowCount() == 1 ) {
   echo "Se detecto un acceso ilegal al sistema, su ip esta siendo monitoreada y sera enviada a la policia";
 ?>
   <a href="http://localhost/crud/">Sitio de login</a>
+
+  
 <?php
 }
 $conn->close();
